@@ -43,16 +43,15 @@ class NoteDatabase {
   }
 
 
-  Future<int> insertNote(String note_title, String note_content) async {
+  Future<void> insertNote(String note_title, String note_content) async {
     Database? tempDB = await _db;
     int response = await tempDB!.rawInsert(
       "INSERT INTO $noteTable($noteTitle, $noteContent) VALUES (?, ?)",
       [note_title, note_content],
     );
-    return response;
   }
 
-  Future<int> updateNote(int id, String note_content) async {
+  Future<void> updateNote(int id, String note_content) async {
     Database? tempDB = await _db;
     int response = await tempDB!.update(
       noteTable,
@@ -60,17 +59,15 @@ class NoteDatabase {
       where: '$noteId = ?',
       whereArgs: [id],
     );
-    return response;
   }
 
-   Future<int> deleteData(int noteId) async {
+   Future<void> deleteData(int noteId) async {
     Database? tempDb = await _db;
     int response = await tempDb!.delete(
       noteTable,
       where: '$noteId = ?',
       whereArgs: [noteId],
     );
-    return response;
   }
 
 }

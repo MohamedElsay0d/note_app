@@ -19,7 +19,7 @@ class HomePage extends StatelessWidget {
       body: const NotesListView(),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          print("object");
+          Navigator.of(context).pushNamed("New_Note");
         },
         child: const Icon(
           Icons.add,

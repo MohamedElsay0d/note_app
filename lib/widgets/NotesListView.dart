@@ -11,35 +11,33 @@ class NotesListView extends StatefulWidget {
 }
 
 class _NotesListViewState extends State<NotesListView> {
-  List<NoteModel> notes = [
-    NoteModel(
-          1, "Note 1", "Description") , 
-          NoteModel(
-          2, "Note2", "Description")
-  ];
-/*
-  @override
-  void initState() {
-    super.initState();
-    getAllNotes().then((notesList) {
-      setState(() {
-        notes = notesList;
-      });
-    });
-  }
+  List<NoteModel> notes = [];
 
-  Future<List<NoteModel>> getAllNotes() async {
-    NoteDatabase noteDatabase = NoteDatabase();
-    List<Map<String, dynamic>> list_notes = await noteDatabase.readNotes();
-    List<NoteModel> tempNotes = [];
-    for (var element in list_notes) {
-      NoteModel noteModel = NoteModel(
-          element['Note_ID'], element['Note_Title'], element['Note_Content']);
-      tempNotes.add(noteModel);
-    }
-    return tempNotes;
+@override
+void initState() {
+  super.initState();
+ Future.delayed(Duration.zero, _loadNotes);
+}
+
+Future<void> _loadNotes() async {
+  final notesList = await getAllNotes();
+  setState(() {
+    notes = notesList;
+  });
+}
+
+Future<List<NoteModel>> getAllNotes() async {
+  NoteDatabase noteDatabase = NoteDatabase();
+  List<Map<String, dynamic>> list_notes = await noteDatabase.readNotes();
+  List<NoteModel> tempNotes = [];
+  for (var element in list_notes) {
+    NoteModel noteModel = NoteModel(
+        element['Note_ID'], element['Note_Title'], element['Note_Content']);
+    tempNotes.add(noteModel);
   }
-*/
+  return tempNotes;
+}
+
   @override
   Widget build(BuildContext context) {
     return ListView.separated(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:note_app/views/add_note.dart';
 
 import 'views/homepage.dart';
 
@@ -11,9 +12,12 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return  MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: HomePage()
+      home: const HomePage() , 
+      routes: {
+        "New_Note" : (context) => Add_Note()
+      },
     );
   }
 }
