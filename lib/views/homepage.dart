@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 
+import '../widgets/NotesListView.dart';
+
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -14,18 +16,15 @@ class HomePage extends StatelessWidget {
         ),
         centerTitle: true,
       ),
-      body: ListView.separated(
-        itemCount: 5,
-        separatorBuilder: (context, i) {
-          return const SizedBox(
-            height: 15,
-          );
+      body: const NotesListView(),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          print("object");
         },
-        itemBuilder: (context, i) {
-          return const SizedBox(
-            child: Text("Medo"),
-          );
-        },
+        child: const Icon(
+          Icons.add,
+          color: Colors.blue,
+        ),
       ),
     );
   }
