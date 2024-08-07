@@ -14,7 +14,7 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return  MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: const HomePage() , 
+      home: HomePage() , 
       routes: {
         "New_Note" : (context) => Add_Note()
       },

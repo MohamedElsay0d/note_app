@@ -12,11 +12,19 @@ class NotesBuilder extends StatefulWidget {
 }
 
 class _NotesBuilderState extends State<NotesBuilder> {
-  var future;
+  late Future<List<NoteModel>> _noteFuture;
+  List<NoteModel> _notes = [];
+
   @override
   void initState() {
     super.initState();
-    future = getAllNotes();
+    _loadNotes();
+  }
+
+  Future<void> _loadNotes() async {
+    _noteFuture = getAllNotes();
+    _notes = await _noteFuture;
+    setState(() {});
   }
 
   Future<List<NoteModel>> getAllNotes() async {
@@ -31,20 +39,41 @@ class _NotesBuilderState extends State<NotesBuilder> {
     return tempNotes;
   }
 
+  Future<void> _deleteNote(NoteModel note) async {
+    NoteDatabase noteDatabase = NoteDatabase();
+    await noteDatabase.deleteData(note.id);
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text('Note is deleted'),
+        duration: Duration(milliseconds: 800),
+      ),
+    );
+    _notes.remove(note);
+    setState(() {});
+  }
+
+  
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<List<NoteModel>>(
-        future: future,
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            return NotesListView(
-              notes: snapshot.data!,
-            );
-          } else if (snapshot.hasError) {
-            return const Center(child: Text("Opps! there was an error"));
-          } else {
-            return const Center(child: CircularProgressIndicator());
-          }
-        });
+      future: _noteFuture,
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          return NotesListView(
+            notes: _notes,
+            onDelete: _deleteNote,
+          );
+        } else if (snapshot.hasError) {
+          return const Center(
+            child: Text("Opps! there was an error"),
+          );
+        } else {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+      },
+    );
   }
 }
