@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../widgets/NotesBuilder.dart';
 import '../widgets/NotesListView.dart';
 
 class HomePage extends StatelessWidget {
@@ -16,7 +17,7 @@ class HomePage extends StatelessWidget {
         ),
         centerTitle: true,
       ),
-      body: const NotesListView(),
+      body: const NotesBuilder(),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.of(context).pushNamed("New_Note");

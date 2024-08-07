@@ -61,12 +61,12 @@ class NoteDatabase {
     );
   }
 
-   Future<void> deleteData(int noteId) async {
+   Future<void> deleteData(int id) async {
     Database? tempDb = await _db;
     int response = await tempDb!.delete(
       noteTable,
       where: '$noteId = ?',
-      whereArgs: [noteId],
+      whereArgs: [id],
     );
   }
 
